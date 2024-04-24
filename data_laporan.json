@@ -1,0 +1,123 @@
+[
+    {
+        "ID_Laporan": "LAP001",
+        "Pelapor": {
+            "NIK": "1234567890123456",
+            "Nama": "John Doe"
+        },
+        "Terduga_Covid": {
+            "Nama": "Jane Doe",
+            "Alamat": "Jalan Contoh No. 456",
+            "Gejala": "Demam, batuk"
+        }
+    },
+    {
+        "ID_Laporan": "LAP002",
+        "Pelapor": {
+            "NIK": "2345678901234567",
+            "Nama": "Jane Doe"
+        },
+        "Terduga_Covid": {
+            "Nama": "Michael Smith",
+            "Alamat": "Jalan Contoh No. 789",
+            "Gejala": "Demam, pilek"
+        }
+    },
+    {
+        "ID_Laporan": "LAP003",
+        "Pelapor": {
+            "NIK": "3456789012345678",
+            "Nama": "Michael Smith"
+        },
+        "Terduga_Covid": {
+            "Nama": "Maria Garcia",
+            "Alamat": "Jalan Contoh No. 101112",
+            "Gejala": "Demam, sakit tenggorokan"
+        }
+    },
+    {
+        "ID_Laporan": "LAP004",
+        "Pelapor": {
+            "NIK": "4567890123456789",
+            "Nama": "Maria Garcia",
+            "Alamat": "Jalan Contoh No. 101112"
+        },
+        "Terduga_Covid": {
+            "Nama": "David Johnson",
+            "Alamat": "Jalan Contoh No. 131415",
+            "Gejala": "Demam, sesak napas"
+        }
+    },
+    {
+        "ID_Laporan": "LAP005",
+        "Pelapor": {
+            "NIK": "5678901234567890",
+            "Nama": "David Johnson"
+        },
+        "Terduga_Covid": {
+            "Nama": "Linda Brown",
+            "Alamat": "Jalan Contoh No. 161718",
+            "Gejala": "Demam, batuk"
+        }
+    },
+    {
+        "ID_Laporan": "LAP006",
+        "Pelapor": {
+            "NIK": "6789012345678901",
+            "Nama": "Linda Brown"
+        },
+        "Terduga_Covid": {
+            "Nama": "Robert Martinez",
+            "Alamat": "Jalan Contoh No. 192021",
+            "Gejala": "Batuk, sakit tenggorokan"
+        }
+    },
+    {
+        "ID_Laporan": "LAP007",
+        "Pelapor": {
+            "NIK": "7890123456789012",
+            "Nama": "Robert Martinez"
+        },
+        "Terduga_Covid": {
+            "Nama": "Jennifer Wilson",
+            "Alamat": "Jalan Contoh No. 222324",
+            "Gejala": "Demam, pilek"
+        }
+    },
+    {
+        "ID_Laporan": "LAP008",
+        "Pelapor": {
+            "NIK": "8901234567890123",
+            "Nama": "Jennifer Wilson"
+        },
+        "Terduga_Covid": {
+            "Nama": "James Anderson",
+            "Alamat": "Jalan Contoh No. 252627",
+            "Gejala": "Demam, batuk"
+        }
+    },
+    {
+        "ID_Laporan": "LAP009",
+        "Pelapor": {
+            "NIK": "9012345678901234",
+            "Nama": "James Anderson"
+        },
+        "Terduga_Covid": {
+            "Nama": "Mary Taylor",
+            "Alamat": "Jalan Contoh No. 282930",
+            "Gejala": "Demam, sakit tenggorokan"
+        }
+    },
+    {
+        "ID_Laporan": "LAP010",
+        "Pelapor": {
+            "NIK": "0123456789012345",
+            "Nama": "Mary Taylor"
+        },
+        "Terduga_Covid": {
+            "Nama": "John Doe",
+            "Alamat": "Jalan Contoh No. 123",
+            "Gejala": "Demam, sesak napas"
+        }
+    }
+]
