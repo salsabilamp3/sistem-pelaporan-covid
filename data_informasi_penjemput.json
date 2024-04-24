@@ -1,0 +1,53 @@
+[
+    {
+      "Nama_Lengkap": "Driver ABC",
+      "Nomor_Telepon": "08123456789",
+      "Nomor_Kendaraan": "B 1234 CD"
+    },
+    {
+      "Nama_Lengkap": "Driver XYZ",
+      "Nomor_Telepon": "08123456788",
+      "Nomor_Kendaraan": "B 5678 EF"
+    },
+    {
+      "Nama_Lengkap": "Driver PQR",
+      "Nomor_Telepon": "08123456787",
+      "Nomor_Kendaraan": "B 9101 GH"
+    },
+    {
+      "Nama_Lengkap": "Driver MNO",
+      "Nomor_Telepon": "08123456786",
+      "Nomor_Kendaraan": "B 1121 IJ"
+    },
+    {
+      "Nama_Lengkap": "Driver STU",
+      "Nomor_Telepon": "08123456785",
+      "Nomor_Kendaraan": "B 3141 KL"
+    },
+    {
+      "Nama_Lengkap": "Driver VWX",
+      "Nomor_Telepon": "08123456784",
+      "Nomor_Kendaraan": "B 5161 MN"
+    },
+    {
+      "Nama_Lengkap": "Driver YZA",
+      "Nomor_Telepon": "08123456783",
+      "Nomor_Kendaraan": "B 7181 OP"
+    },
+    {
+      "Nama_Lengkap": "Driver BCD",
+      "Nomor_Telepon": "08123456782",
+      "Nomor_Kendaraan": "B 9202 QR"
+    },
+    {
+      "Nama_Lengkap": "Driver EFG",
+      "Nomor_Telepon": "08123456781",
+      "Nomor_Kendaraan": "B 1232 ST"
+    },
+    {
+      "Nama_Lengkap": "Driver HIJ",
+      "Nomor_Telepon": "08123456780",
+      "Nomor_Kendaraan": "B 2342 UV"
+    }
+  ]
+  
