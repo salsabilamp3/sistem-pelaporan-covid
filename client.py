@@ -1,7 +1,8 @@
+import json
 from google.cloud import pubsub_v1
 import os
 
-credentials_path = "D:\KULIAH\SEMESTER6\Sistem Terdistribusi\praktek\coba-implementasi\credentials.json"
+credentials_path = r"C:\Users\ASUS\Documents\TINGKAT3\SEMESTER_6\SistemTerdistribusi\TUBES\sistem-pelaporan-covid\credentials.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
 
 # Fungsi untuk mengirim pesan ke topik server
@@ -24,16 +25,22 @@ subscription_path = "projects/sistem-siaga-covid/subscriptions/response-sub"
 streaming_pull_future = subscriber.subscribe(subscription_path, callback=callback)
 
 # Data contoh laporan
-laporan = {
-    "NIK": "1234567890",
-    "Nama Pelapor": "John Doe",
-    "Nama Terduga Covid": "Jane Doe",
-    "Alamat Terduga Covid": "Jalan Contoh No. 123",
-    "Gejala": "Demam batuk"
-}
+laporan = {}
+field_width = 30
+
+laporan['NIK'] = input(f"{'Masukkan NIK':<{field_width}} : ")
+laporan['Nama Pelapor'] = input(f"{'Masukkan Nama Pelapor':<{field_width}} : ")
+laporan['Nama Terduga Covid'] = input(f"{'Masukkan Nama Terduga Covid':<{field_width}} : ")
+laporan['Alamat Terduga Covid'] = input(f"{'Masukkan Alamat Terduga Covid':<{field_width}} : ")
+laporan['Gejala'] = input(f"{'Masukkan Gejala':<{field_width}} : ")
+
+
+# Tulis data laporan ke file JSON
+with open('data\data_laporan.json', 'w') as json_file:
+    json.dump(laporan, json_file, indent=4)
 
 # Kirim laporan ke server
-send_message(','.join([laporan[key] for key in laporan]))
+send_message(';'.join([laporan[key] for key in laporan]))
 
 print("Laporan dikirim")
 

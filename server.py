@@ -4,7 +4,7 @@ import time
 import os
 from concurrent.futures import TimeoutError
 
-credentials_path = "D:\KULIAH\SEMESTER6\Sistem Terdistribusi\praktek\coba-implementasi\credentials.json"
+credentials_path = r"C:\Users\ASUS\Documents\TINGKAT3\SEMESTER_6\SistemTerdistribusi\TUBES\sistem-pelaporan-covid\credentials.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
 
 # Baca data kependudukan dari file JSON
@@ -14,7 +14,7 @@ with open("data\data_kependudukan.json") as f:
 # Fungsi untuk menangani pesan yang diterima dari topik
 def callback(message):
     # Lakukan validasi data pesan (contoh sederhana)
-    data = message.data.decode('utf-8').split(',')
+    data = message.data.decode('utf-8').split(';')
     print(data)
     if len(data) != 5:
         print("Invalid message format")
