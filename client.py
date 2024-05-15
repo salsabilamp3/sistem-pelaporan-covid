@@ -1,9 +1,13 @@
 from google.cloud import pubsub_v1
+import os
+
+credentials_path = "D:\KULIAH\SEMESTER6\Sistem Terdistribusi\praktek\coba-implementasi\credentials.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
 
 # Fungsi untuk mengirim pesan ke topik server
 def send_message(data):
     publisher = pubsub_v1.PublisherClient()
-    topic_path = publisher.topic_path('your-project-id', 'server-topic')
+    topic_path = "projects/sistem-siaga-covid/topics/laporan"
     future = publisher.publish(topic_path, data=data.encode('utf-8'))
     print(f"Sent message: {data}")
     future.result()
@@ -14,12 +18,9 @@ def callback(message):
     print("Received response:", response)
     message.ack()
 
-# Nama topik yang digunakan untuk respons dari server
-response_topic_name = 'projects/your-project-id/topics/client-response-topic'
-
 # Buat subscriber untuk topik respons
 subscriber = pubsub_v1.SubscriberClient()
-subscription_path = subscriber.subscription_path('your-project-id', 'client-subscription')
+subscription_path = "projects/sistem-siaga-covid/subscriptions/response-sub"
 subscriber.subscribe(subscription_path, callback=callback)
 
 # Data contoh laporan
