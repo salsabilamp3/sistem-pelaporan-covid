@@ -2,18 +2,20 @@ import json
 from google.cloud import pubsub_v1
 import time
 import os
+from concurrent.futures import TimeoutError
 
 credentials_path = "D:\KULIAH\SEMESTER6\Sistem Terdistribusi\praktek\coba-implementasi\credentials.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
 
 # Baca data kependudukan dari file JSON
-with open("data_kependudukan.json") as f:
+with open("data\data_kependudukan.json") as f:
     data_kependudukan = json.load(f)
 
 # Fungsi untuk menangani pesan yang diterima dari topik
 def callback(message):
     # Lakukan validasi data pesan (contoh sederhana)
     data = message.data.decode('utf-8').split(',')
+    print(data)
     if len(data) != 5:
         print("Invalid message format")
         message.ack()
@@ -56,9 +58,17 @@ def send_response(respon):
 subscriber = pubsub_v1.SubscriberClient()
 
 # Subscribe ke topik
-subscription_path = "projects/sistem-siaga-covid/topics/laporan-sub"
-subscriber.subscribe(subscription_path, callback=callback)
+subscription_path = "projects/sistem-siaga-covid/subscriptions/laporan-sub"
+streaming_pull_future = subscriber.subscribe(subscription_path, callback=callback)
 
 print(f"Menunggu pesan dari topik...")
-while True:
-    time.sleep(5)  # Jaga agar program tetap berjalan
+try:
+    with subscriber:
+        try:
+            streaming_pull_future.result()
+        except TimeoutError:
+            streaming_pull_future.cancel()
+            streaming_pull_future.result()
+except Exception as e:
+    print(f"Terjadi kesalahan: {e}")
+    time.sleep(5)  # Tunggu sebentar sebelum mencoba lagi
