@@ -4,7 +4,7 @@ import time
 import os
 from concurrent.futures import TimeoutError
 
-credentials_path = r"D:\SISTER\sistem-pelaporan-covid\credentials.json"
+credentials_path = r"C:\sistem-siaga-covid\credentials.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
 
 # Baca data kependudukan dari file JSON
