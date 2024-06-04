@@ -8,7 +8,7 @@ credentials_path = r"C:\sistem-siaga-covid\credentials.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
 
 # Baca data kependudukan dari file JSON
-with open("data\data_kependudukan.json") as f:
+with open(r"data\data_kependudukan.json") as f:
     data_kependudukan = json.load(f)
 
 # Fungsi untuk menangani pesan yang diterima dari topik
@@ -26,8 +26,17 @@ def callback(message):
     nama = data[1]
 
     # Lakukan validasi NIK dan nama dengan data kependudukan dari file JSON
-    if not validate_nik(nik, nama):
-        print("Invalid NIK or name")
+    valid_nik, valid_nama = validate_nik(nik, nama)
+    if not valid_nik and not valid_nama:
+        print("Invalid NIK and name")
+        message.ack()
+        return
+    elif not valid_nik:
+        print("Invalid NIK")
+        message.ack()
+        return
+    elif not valid_nama:
+        print("Invalid name")
         message.ack()
         return
 
@@ -43,10 +52,16 @@ def callback(message):
 
 # Fungsi untuk validasi NIK dan nama berdasarkan data kependudukan
 def validate_nik(nik, nama):
+    valid_nik = False
+    valid_nama = False
     for person in data_kependudukan:
-        if person["NIK"] == nik and person["Nama"] == nama:
-            return True
-    return False
+        if person["NIK"] == nik:
+            valid_nik = True
+        if person["Nama"] == nama:
+            valid_nama = True
+        if valid_nik and valid_nama:
+            break
+    return valid_nik, valid_nama
 
 # Fungsi untuk mengirim respons ke client menggunakan message queue
 def send_response(respon):
