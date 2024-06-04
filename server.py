@@ -26,7 +26,7 @@ def callback(message):
     nama = data[1]
 
     # Lakukan validasi NIK dan nama dengan data kependudukan dari file JSON
-    valid_nik, valid_nama = validate_nik(nik, nama)
+    valid_nik, valid_nama, reason = validate_nik(nik, nama)
     if not valid_nik and not valid_nama:
         print("Invalid NIK and name")
         message.ack()
@@ -36,7 +36,7 @@ def callback(message):
         message.ack()
         return
     elif not valid_nama:
-        print("Invalid name")
+        print(f"Invalid name: {reason}")
         message.ack()
         return
 
@@ -54,14 +54,19 @@ def callback(message):
 def validate_nik(nik, nama):
     valid_nik = False
     valid_nama = False
+    reason = ""
     for person in data_kependudukan:
         if person["NIK"] == nik:
             valid_nik = True
+            if person["Nama"] == nama:
+                valid_nama = True
+                break
+            else:
+                reason = f"NIK {nik} terdaftar dengan nama {person['Nama']}, bukan {nama}"
         if person["Nama"] == nama:
-            valid_nama = True
-        if valid_nik and valid_nama:
-            break
-    return valid_nik, valid_nama
+            if not valid_nik:
+                reason = f"Nama {nama} terdaftar dengan NIK {person['NIK']}, bukan {nik}"
+    return valid_nik, valid_nama, reason
 
 # Fungsi untuk mengirim respons ke client menggunakan message queue
 def send_response(respon):
