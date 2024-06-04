@@ -2,7 +2,7 @@ import json
 from google.cloud import pubsub_v1
 import os
 
-credentials_path = r"C:\Users\ASUS\Documents\TINGKAT3\SEMESTER_6\SistemTerdistribusi\TUBES\sistem-pelaporan-covid\credentials.json"
+credentials_path = r"D:\SISTER\sistem-pelaporan-covid\credentials.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
 
 # Fungsi untuk mengirim pesan ke topik server

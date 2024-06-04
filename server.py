@@ -4,7 +4,7 @@ import time
 import os
 from concurrent.futures import TimeoutError
 
-credentials_path = r"C:\Users\ASUS\Documents\TINGKAT3\SEMESTER_6\SistemTerdistribusi\TUBES\sistem-pelaporan-covid\credentials.json"
+credentials_path = r"D:\SISTER\sistem-pelaporan-covid\credentials.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
 
 # Baca data kependudukan dari file JSON
@@ -21,16 +21,18 @@ def callback(message):
         message.ack()
         return
 
-    # Lakukan validasi NIK dengan data kependudukan dari file JSON
+    # Dapatkan NIK dan nama dari data pesan
     nik = data[0]
-    if not validate_nik(nik):
-        print("Invalid NIK")
+    nama = data[1]
+
+    # Lakukan validasi NIK dan nama dengan data kependudukan dari file JSON
+    if not validate_nik(nik, nama):
+        print("Invalid NIK or name")
         message.ack()
         return
 
     # Respon kepada client dengan informasi waktu dan jumlah orang penjemputan
     waktu = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    nama = data[1]
     jumlah_orang = 1  # Misalnya hanya 1 orang penjemputan
     respon = f"{waktu}, {nama}, Jumlah Orang Penjemputan: {jumlah_orang}"
     print(f"Respon: {respon}")
@@ -39,10 +41,10 @@ def callback(message):
     send_response(respon)
     message.ack()
 
-# Fungsi untuk validasi NIK berdasarkan data kependudukan
-def validate_nik(nik):
+# Fungsi untuk validasi NIK dan nama berdasarkan data kependudukan
+def validate_nik(nik, nama):
     for person in data_kependudukan:
-        if person["NIK"] == nik:
+        if person["NIK"] == nik and person["Nama"] == nama:
             return True
     return False
 
