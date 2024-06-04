@@ -25,13 +25,16 @@ def callback(message):
     except Exception as e:
         print(f"Terjadi kesalahan saat menangani respons dari server: {e}")
 
-# Buat subscriber untuk topik respons
-try:
-    subscriber = pubsub_v1.SubscriberClient()
-    subscription_path = "projects/sistem-siaga-covid/subscriptions/response-sub"
-    streaming_pull_future = subscriber.subscribe(subscription_path, callback=callback)
-except Exception as e:
-    print(f"Terjadi kesalahan saat membuat subscriber: {e}")
+# Fungsi untuk membuat subscriber
+def create_subscriber():
+    try:
+        subscriber = pubsub_v1.SubscriberClient()
+        subscription_path = "projects/sistem-siaga-covid/subscriptions/response-sub"
+        streaming_pull_future = subscriber.subscribe(subscription_path, callback=callback)
+        return subscriber, streaming_pull_future
+    except Exception as e:
+        print(f"Terjadi kesalahan saat membuat subscriber: {e}")
+        return None, None
 
 # Data contoh laporan
 laporan = {}
@@ -45,7 +48,7 @@ try:
     laporan['Gejala'] = input(f"{'Masukkan Gejala':<{field_width}} : ")
 
     # Tulis data laporan ke file JSON
-    with open('data\data_laporan.json', 'w') as json_file:
+    with open(r'data\data_laporan.json', 'w') as json_file:
         json.dump(laporan, json_file, indent=4)
 
     # Kirim laporan ke server
@@ -55,13 +58,15 @@ try:
 
     print(f"Menunggu respons dari server...")
     # Agar subscriber tetap berjalan
-    try:
-        with subscriber:
+    subscriber, streaming_pull_future = create_subscriber()
+    if subscriber:
+        try:
+            with subscriber:
+                streaming_pull_future.result()
+        except TimeoutError:
+            streaming_pull_future.cancel()
             streaming_pull_future.result()
-    except TimeoutError:
-        streaming_pull_future.cancel()
-        streaming_pull_future.result()
-    except Exception as e:
-        print(f"Terjadi kesalahan: {e}")
+        except Exception as e:
+            print(f"Terjadi kesalahan: {e}")
 except Exception as e:
     print(f"Terjadi kesalahan saat memproses laporan: {e}")
