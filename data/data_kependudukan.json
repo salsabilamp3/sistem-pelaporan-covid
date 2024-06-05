@@ -1,93 +1,92 @@
 [
-    {
-      "NIK": "1234567890123456",
-      "Nama": "John Doe",
-      "Alamat": "Jalan Contoh No. 123",
-      "Tanggal_Lahir": "1990-01-01",
-      "Jenis_Kelamin": "Laki-laki",
-      "Status_Perkawinan": "Belum Menikah",
-      "Kewarganegaraan": "WNI"
-    },
-    {
-      "NIK": "2345678901234567",
-      "Nama": "Jane Doe",
-      "Alamat": "Jalan Contoh No. 456",
-      "Tanggal_Lahir": "1995-05-15",
-      "Jenis_Kelamin": "Perempuan",
-      "Status_Perkawinan": "Menikah",
-      "Kewarganegaraan": "WNI"
-    },
-    {
-      "NIK": "3456789012345678",
-      "Nama": "Michael Smith",
-      "Alamat": "Jalan Contoh No. 789",
-      "Tanggal_Lahir": "1988-10-20",
-      "Jenis_Kelamin": "Laki-laki",
-      "Status_Perkawinan": "Belum Menikah",
-      "Kewarganegaraan": "WNI"
-    },
-    {
-      "NIK": "4567890123456789",
-      "Nama": "Maria Garcia",
-      "Alamat": "Jalan Contoh No. 101112",
-      "Tanggal_Lahir": "1993-03-03",
-      "Jenis_Kelamin": "Perempuan",
-      "Status_Perkawinan": "Menikah",
-      "Kewarganegaraan": "WNI"
-    },
-    {
-      "NIK": "5678901234567890",
-      "Nama": "David Johnson",
-      "Alamat": "Jalan Contoh No. 131415",
-      "Tanggal_Lahir": "1992-07-07",
-      "Jenis_Kelamin": "Laki-laki",
-      "Status_Perkawinan": "Belum Menikah",
-      "Kewarganegaraan": "WNI"
-    },
-    {
-      "NIK": "6789012345678901",
-      "Nama": "Linda Brown",
-      "Alamat": "Jalan Contoh No. 161718",
-      "Tanggal_Lahir": "1994-12-12",
-      "Jenis_Kelamin": "Perempuan",
-      "Status_Perkawinan": "Menikah",
-      "Kewarganegaraan": "WNI"
-    },
-    {
-      "NIK": "7890123456789012",
-      "Nama": "Robert Martinez",
-      "Alamat": "Jalan Contoh No. 192021",
-      "Tanggal_Lahir": "1989-04-04",
-      "Jenis_Kelamin": "Laki-laki",
-      "Status_Perkawinan": "Belum Menikah",
-      "Kewarganegaraan": "WNI"
-    },
-    {
-      "NIK": "8901234567890123",
-      "Nama": "Jennifer Wilson",
-      "Alamat": "Jalan Contoh No. 222324",
-      "Tanggal_Lahir": "1991-09-09",
-      "Jenis_Kelamin": "Perempuan",
-      "Status_Perkawinan": "Menikah",
-      "Kewarganegaraan": "WNI"
-    },
-    {
-      "NIK": "9012345678901234",
-      "Nama": "James Anderson",
-      "Alamat": "Jalan Contoh No. 252627",
-      "Tanggal_Lahir": "1987-02-02",
-      "Jenis_Kelamin": "Laki-laki",
-      "Status_Perkawinan": "Belum Menikah",
-      "Kewarganegaraan": "WNI"
-    },
-    {
-      "NIK": "0123456789012345",
-      "Nama": "Mary Taylor",
-      "Alamat": "Jalan Contoh No. 282930",
-      "Tanggal_Lahir": "1996-06-06",
-      "Jenis_Kelamin": "Perempuan",
-      "Status_Perkawinan": "Menikah",
-      "Kewarganegaraan": "WNI"
-    }
-  ]
-  
+  {
+    "NIK": "1234567890123456",
+    "Nama": "John Doe",
+    "Alamat": "Jalan Merdeka No. 12, Jakarta",
+    "Tanggal_Lahir": "1990-01-01",
+    "Jenis_Kelamin": "Laki-laki",
+    "Status_Perkawinan": "Belum Menikah",
+    "Kewarganegaraan": "WNI"
+  },
+  {
+    "NIK": "2345678901234567",
+    "Nama": "Jane Doe",
+    "Alamat": "Jalan Sudirman No. 45, Surabaya",
+    "Tanggal_Lahir": "1995-05-15",
+    "Jenis_Kelamin": "Perempuan",
+    "Status_Perkawinan": "Menikah",
+    "Kewarganegaraan": "WNI"
+  },
+  {
+    "NIK": "3456789012345678",
+    "Nama": "Michael Smith",
+    "Alamat": "Jalan Diponegoro No. 78, Bandung",
+    "Tanggal_Lahir": "1988-10-20",
+    "Jenis_Kelamin": "Laki-laki",
+    "Status_Perkawinan": "Belum Menikah",
+    "Kewarganegaraan": "WNI"
+  },
+  {
+    "NIK": "4567890123456789",
+    "Nama": "Maria Garcia",
+    "Alamat": "Jalan Gajah Mada No. 101, Medan",
+    "Tanggal_Lahir": "1993-03-03",
+    "Jenis_Kelamin": "Perempuan",
+    "Status_Perkawinan": "Menikah",
+    "Kewarganegaraan": "WNI"
+  },
+  {
+    "NIK": "5678901234567890",
+    "Nama": "David Johnson",
+    "Alamat": "Jalan Pattimura No. 131, Yogyakarta",
+    "Tanggal_Lahir": "1992-07-07",
+    "Jenis_Kelamin": "Laki-laki",
+    "Status_Perkawinan": "Belum Menikah",
+    "Kewarganegaraan": "WNI"
+  },
+  {
+    "NIK": "6789012345678901",
+    "Nama": "Linda Brown",
+    "Alamat": "Jalan RA Kartini No. 161, Semarang",
+    "Tanggal_Lahir": "1994-12-12",
+    "Jenis_Kelamin": "Perempuan",
+    "Status_Perkawinan": "Menikah",
+    "Kewarganegaraan": "WNI"
+  },
+  {
+    "NIK": "7890123456789012",
+    "Nama": "Robert Martinez",
+    "Alamat": "Jalan Imam Bonjol No. 191, Palembang",
+    "Tanggal_Lahir": "1989-04-04",
+    "Jenis_Kelamin": "Laki-laki",
+    "Status_Perkawinan": "Belum Menikah",
+    "Kewarganegaraan": "WNI"
+  },
+  {
+    "NIK": "8901234567890123",
+    "Nama": "Jennifer Wilson",
+    "Alamat": "Jalan HOS Cokroaminoto No. 222, Denpasar",
+    "Tanggal_Lahir": "1991-09-09",
+    "Jenis_Kelamin": "Perempuan",
+    "Status_Perkawinan": "Menikah",
+    "Kewarganegaraan": "WNI"
+  },
+  {
+    "NIK": "9012345678901234",
+    "Nama": "James Anderson",
+    "Alamat": "Jalan Teuku Umar No. 252, Makassar",
+    "Tanggal_Lahir": "1987-02-02",
+    "Jenis_Kelamin": "Laki-laki",
+    "Status_Perkawinan": "Belum Menikah",
+    "Kewarganegaraan": "WNI"
+  },
+  {
+    "NIK": "0123456789012345",
+    "Nama": "Mary Taylor",
+    "Alamat": "Jalan Jenderal Sudirman No. 282, Malang",
+    "Tanggal_Lahir": "1996-06-06",
+    "Jenis_Kelamin": "Perempuan",
+    "Status_Perkawinan": "Menikah",
+    "Kewarganegaraan": "WNI"
+  }
+]
