@@ -2,9 +2,12 @@ import json
 from google.cloud import pubsub_v1
 import time
 import os
+from dotenv import load_dotenv
 from concurrent.futures import TimeoutError
 
-credentials_path = r"C:\sistem-siaga-covid\credentials.json"
+load_dotenv()
+
+credentials_path = os.getenv('CREDENTIALS_PATH')
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
 
 # Baca data kependudukan dari file JSON

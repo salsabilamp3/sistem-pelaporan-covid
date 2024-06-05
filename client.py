@@ -1,8 +1,11 @@
 import json
 from google.cloud import pubsub_v1
 import os
+from dotenv import load_dotenv
 
-credentials_path = r"C:\sistem-siaga-covid\credentials.json"
+load_dotenv()
+
+credentials_path = os.getenv('CREDENTIALS_PATH')
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
 
 # Fungsi untuk mengirim pesan ke topik server
