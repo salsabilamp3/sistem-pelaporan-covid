@@ -30,28 +30,20 @@ def callback(message):
 
     # Lakukan validasi NIK dan nama dengan data kependudukan dari file JSON
     valid_nik, valid_nama, reason = validate_nik(nik, nama)
-    if not valid_nik and not valid_nama:
-        print("Invalid NIK and name")
-        message.ack()
-        return
-    elif not valid_nik:
-        print("Invalid NIK")
-        message.ack()
-        return
-    elif not valid_nama:
-        print(f"Invalid name: {reason}")
-        message.ack()
-        return
+    if valid_nik and valid_nama:
+        # Respon kepada client dengan informasi waktu dan jumlah orang penjemputan
+        waktu = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        jumlah_orang = 1  # Misalnya hanya 1 orang penjemputan
+        respon = f"{waktu}, {nama}, Jumlah Orang Penjemputan: {jumlah_orang}"
+    else:
+        respon = f"Kesalahan: {reason}"
 
-    # Respon kepada client dengan informasi waktu dan jumlah orang penjemputan
-    waktu = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    jumlah_orang = 1  # Misalnya hanya 1 orang penjemputan
-    respon = f"{waktu}, {nama}, Jumlah Orang Penjemputan: {jumlah_orang}"
     print(f"Respon: {respon}")
 
     # Kirim respons ke client menggunakan message queue
     send_response(respon)
     message.ack()
+
 
 # Fungsi untuk validasi NIK dan nama berdasarkan data kependudukan
 def validate_nik(nik, nama):
@@ -66,12 +58,17 @@ def validate_nik(nik, nama):
                 break
             else:
                 reason = f"NIK {nik} terdaftar dengan nama {person['Nama']}, bukan {nama}"
-        if person["Nama"] == nama:
-            if not valid_nik:
+                break
+    if not valid_nik:
+        for person in data_kependudukan:
+            if person["Nama"] == nama:
                 reason = f"Nama {nama} terdaftar dengan NIK {person['NIK']}, bukan {nik}"
+                break
+        if not reason:
+            reason = f"NIK {nik} tidak ditemukan"
     return valid_nik, valid_nama, reason
 
-# Fungsi untuk mengirim respons ke client menggunakan message queue
+# Fungsi untuk mengirim respons ke client menggunakan mess~age queue
 def send_response(respon):
     publisher = pubsub_v1.PublisherClient()
     topic_path = "projects/sistem-siaga-covid/topics/response"
