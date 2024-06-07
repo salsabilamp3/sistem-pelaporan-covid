@@ -24,80 +24,89 @@ with open(r"data\data_informasi_penjemput.json") as f:
 
 # Fungsi untuk menangani pesan yang diterima dari topik
 def callback(message):
-    # Lakukan validasi data pesan (contoh sederhana)
-    data = message.data.decode('utf-8').split(';')
-    print(data)
-    if len(data) != 6:
-        print("Invalid message format")
-        message.ack()
-        return
+    try:
+        # Dekode data pesan sebagai JSON
+        data = json.loads(message.data.decode('utf-8'))
 
-    # Dapatkan IDLaporan, NIK, dan nama dari data pesan
-    id_laporan = data[0]
-    nik = data[1]
-    nama = data[2]
+        # Lakukan validasi apakah data memiliki kunci yang diharapkan
+        if "IDLaporan" in data and "NIK" in data and "Nama Pelapor" in data and "Pasien" in data:
+            print("Valid message format")
+           
+            # Dapatkan IDLaporan, NIK, dan nama dari data pesan
+            id_laporan = data["IDLaporan"]
+            nik = data["NIK"]
+            nama = data["Nama Pelapor"]
 
-    # Lakukan validasi NIK dan nama dengan data kependudukan dari file JSON
-    valid_nik, valid_nama, reason = validate_nik(nik, nama)
-    if valid_nik and valid_nama:
-        # Pilih penjemput dengan last_schedule terkecil
-        selected_penjemput = min(data_penjemput, key=lambda x: x.get('last_schedule', float('inf')))
-        
-        # Respon kepada client dengan informasi waktu penjemputan, nama penjemput, dan jumlah orang penjemputan
-        waktu_penjemputan = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        nama_penjemput = selected_penjemput["Nama_Lengkap"]
-        jumlah_orang = 1  # Misalnya hanya 1 orang penjemputan
+            # Lakukan validasi NIK dan nama dengan data kependudukan dari file JSON
+            valid_nik, valid_nama, reason = validate_nik(nik, nama)
 
-        # Perbarui last_schedule penjemput yang dipilih
-        last_schedule = selected_penjemput.get("last_schedule")
-        if last_schedule and last_schedule >= waktu_penjemputan:
-            # Jika last_schedule belum terlewati, atur waktu penjemputan 10 menit setelah last_schedule
-            new_schedule = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.mktime(time.strptime(last_schedule, "%Y-%m-%d %H:%M:%S")) + 600))
-            selected_penjemput["last_schedule"] = new_schedule
+            if valid_nik and valid_nama:
+                # Pilih penjemput dengan last_schedule terkecil
+                selected_penjemput = min(data_penjemput, key=lambda x: x.get('last_schedule', float('inf')))
+               
+                # Respon kepada client dengan informasi waktu penjemputan, nama penjemput, dan jumlah orang penjemputan
+                waktu_penjemputan = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+                nama_penjemput = selected_penjemput["Nama_Lengkap"]
+                jumlah_orang = 1  # Misalnya hanya 1 orang penjemputan
+
+                # Perbarui last_schedule penjemput yang dipilih
+                last_schedule = selected_penjemput.get("last_schedule")
+                if last_schedule and last_schedule >= waktu_penjemputan:
+                    # Jika last_schedule belum terlewati, atur waktu penjemputan 10 menit setelah last_schedule
+                    new_schedule = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.mktime(time.strptime(last_schedule, "%Y-%m-%d %H:%M:%S")) + 600))
+                    selected_penjemput["last_schedule"] = new_schedule
+                else:
+                    # Jika last_schedule sudah terlewati atau belum diatur, atur waktu penjemputan sama dengan waktu sekarang
+                    selected_penjemput["last_schedule"] = waktu_penjemputan
+
+                # Tambahkan object penjemputan ke dalam data laporan
+                for penjemput in data_penjemput:
+                    if penjemput["ID_Penjemput"] == selected_penjemput["ID_Penjemput"]:
+                        penjemput["last_schedule"] = selected_penjemput["last_schedule"]
+                        break
+               
+                # Tulis data laporan ke file JSON
+                with open("data\data_informasi_penjemput.json", 'w') as json_file:
+                    json.dump(data_penjemput, json_file, indent=4)
+
+                waktu_penjemputan = selected_penjemput["last_schedule"]
+               
+                # Tulis data laporan yang sudah diperbarui ke file JSON
+                with open("data\data_laporan.json", 'r+') as json_file:
+                    data_laporan = json.load(json_file)
+                    for laporan in data_laporan:
+                        if laporan["IDLaporan"] == id_laporan:
+                            laporan["Penjemputan"] = {
+                                "ID_Penjemput": selected_penjemput["ID_Penjemput"],
+                                "Nama_Lengkap": selected_penjemput["Nama_Lengkap"],
+                                "Nomor_Telepon": selected_penjemput["Nomor_Telepon"],
+                                "Nomor_Kendaraan": selected_penjemput["Nomor_Kendaraan"],
+                                "Waktu_Penjemputan": waktu_penjemputan
+                            }
+                            break
+                    json_file.seek(0)  # Pindah ke awal file
+                    json.dump(data_laporan, json_file, indent=4)
+                    json_file.truncate()  # Potong ke panjang yang benar jika perlu
+               
+                respon_detail = f"Waktu Penjemputan: {waktu_penjemputan}, Nama Penjemput: {nama_penjemput}, Jumlah Orang Penjemputan: {jumlah_orang}"
+               
+            else:
+                respon_detail = f"Kesalahan: {reason}"
+            respon = f"{id_laporan};{respon_detail}"
+            print(f"Respon: {respon}")
+
+            # Kirim respons ke client menggunakan message queue
+            send_response(respon)
+
         else:
-            # Jika last_schedule sudah terlewati atau belum diatur, atur waktu penjemputan sama dengan waktu sekarang
-            selected_penjemput["last_schedule"] = waktu_penjemputan
+            print("Invalid message format")
+   
+    except Exception as e:
+        print(f"Error: {e}")
 
-        # Tambahkan object penjemputan ke dalam data laporan
-        for penjemput in data_penjemput:
-            if penjemput["ID_Penjemput"] == selected_penjemput["ID_Penjemput"]:
-                penjemput["last_schedule"] = selected_penjemput["last_schedule"]
-                break
-        
-        # Tulis data laporan ke file JSON
-        with open("data\data_informasi_penjemput.json", 'w') as json_file:
-            json.dump(data_penjemput, json_file, indent=4)
-
-        waktu_penjemputan = selected_penjemput["last_schedule"]
-        
-        # Tulis data laporan yang sudah diperbarui ke file JSON
-        with open("data\data_laporan.json", 'r+') as json_file:
-            data_laporan = json.load(json_file)
-            for laporan in data_laporan:
-                if laporan["IDLaporan"] == id_laporan:
-                    laporan["Penjemputan"] = {
-                        "ID_Penjemput": selected_penjemput["ID_Penjemput"],
-                        "Nama_Lengkap": selected_penjemput["Nama_Lengkap"],
-                        "Nomor_Telepon": selected_penjemput["Nomor_Telepon"],
-                        "Nomor_Kendaraan": selected_penjemput["Nomor_Kendaraan"],
-                        "Waktu_Penjemputan": waktu_penjemputan
-                    }
-                    break
-            json_file.seek(0)  # Pindah ke awal file
-            json.dump(data_laporan, json_file, indent=4)
-            json_file.truncate()  # Potong ke panjang yang benar jika perlu
-        
-        respon_detail = f"Waktu Penjemputan: {waktu_penjemputan}, Nama Penjemput: {nama_penjemput}, Jumlah Orang Penjemputan: {jumlah_orang}"
-        
-    else:
-        respon_detail = f"Kesalahan: {reason}"
-
-    respon = f"{id_laporan};{respon_detail}"
-    print(f"Respon: {respon}")
-
-    # Kirim respons ke client menggunakan message queue
-    send_response(respon)
+    # Acknowledge pesan setelah diproses
     message.ack()
+
 # Fungsi untuk validasi NIK dan nama berdasarkan data kependudukan
 def validate_nik(nik, nama):
     valid_nik = False

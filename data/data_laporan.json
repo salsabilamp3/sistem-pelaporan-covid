@@ -1,47 +1,31 @@
 [
     {
-        "IDLaporan": "833d9329-5697-44eb-89b6-446ebc063f27",
-        "NIK": "9012345678901234",
-        "Nama Pelapor": "James Anderson",
-        "Nama Terduga Covid": "asd",
-        "Alamat Terduga Covid": "asda",
-        "Gejala": "asd",
+        "IDLaporan": "222b8baa-4046-481b-a009-51030142f9e7",
+        "NIK": "2345678901234567",
+        "Nama Pelapor": "Jane Doe",
+        "Pasien": [
+            {
+                "Nama Terduga Covid": "Cintia",
+                "Alamat Terduga Covid": "Cimahi",
+                "Gejala": "Batuk"
+            },
+            {
+                "Nama Terduga Covid": "Salsabila",
+                "Alamat Terduga Covid": "Cimahi",
+                "Gejala": "Demam"
+            },
+            {
+                "Nama Terduga Covid": "Tabitha",
+                "Alamat Terduga Covid": "Cimahi",
+                "Gejala": "Batuk, demam"
+            }
+        ],
         "Penjemputan": {
-            "ID_Penjemput": "",
-            "Nama_Lengkap": "",
-            "Nomor_Telepon": "",
-            "Nomor_Kendaraan": "",
-            "Waktu_Penjemputan": ""
-        }
-    },
-    {
-        "IDLaporan": "65b4bfc8-197f-4d8c-bda8-7807d822263c",
-        "NIK": "6789012345678901",
-        "Nama Pelapor": "Linda Brown",
-        "Nama Terduga Covid": "Lindos",
-        "Alamat Terduga Covid": "Jalan Kartini",
-        "Gejala": "Batuk, Demam",
-        "Penjemputan": {
-            "ID_Penjemput": "PEN005",
-            "Nama_Lengkap": "Driver STU",
-            "Nomor_Telepon": "08123456785",
-            "Nomor_Kendaraan": "B 3141 KL",
-            "Waktu_Penjemputan": "2024-06-05 12:50:20"
-        }
-    },
-    {
-        "IDLaporan": "44f59161-7d3d-4b52-a2a2-b459166a369f",
-        "NIK": "6789012345678901",
-        "Nama Pelapor": "Linda Brown",
-        "Nama Terduga Covid": "Suparman",
-        "Alamat Terduga Covid": "Jalan ituh",
-        "Gejala": "Jekang",
-        "Penjemputan": {
-            "ID_Penjemput": "PEN006",
-            "Nama_Lengkap": "Driver VWX",
-            "Nomor_Telepon": "08123456784",
-            "Nomor_Kendaraan": "B 5161 MN",
-            "Waktu_Penjemputan": "2024-06-05 12:50:53"
+            "ID_Penjemput": "PEN004",
+            "Nama_Lengkap": "Driver MNO",
+            "Nomor_Telepon": "08123456786",
+            "Nomor_Kendaraan": "B 1121 IJ",
+            "Waktu_Penjemputan": "2024-06-07 17:52:34"
         }
     }
 ]

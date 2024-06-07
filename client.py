@@ -1,8 +1,8 @@
 import json
 import uuid
-from google.cloud import pubsub_v1
 import os
 from dotenv import load_dotenv
+from google.cloud import pubsub_v1
 from concurrent.futures import TimeoutError
 
 # Memuat variabel lingkungan dari file .env
@@ -17,7 +17,7 @@ def send_message(data):
         publisher = pubsub_v1.PublisherClient()
         topic_path = "projects/sistem-siaga-covid/topics/laporan"
         future = publisher.publish(topic_path, data=data.encode('utf-8'))
-        print(f"Sent message: {data}")
+        print(f"\nSent message: {data}")
         future.result()
     except Exception as e:
         print(f"Terjadi kesalahan saat mengirim pesan: {e}")
@@ -27,7 +27,7 @@ def callback(message):
     try:
         response = message.data.decode('utf-8')
         id_laporan, respon_detail = response.split(';', 1)
-        print(f"Received response for IDLaporan {id_laporan}: {respon_detail}")
+        print(f"\nReceived response for IDLaporan {id_laporan}: {respon_detail}")
         message.ack()
     except Exception as e:
         print(f"Terjadi kesalahan saat menangani respons dari server: {e}")
@@ -49,26 +49,39 @@ laporan = {}
 field_width = 30
 
 try:
+    # Buat struktur data laporan yang baru
     laporan['IDLaporan'] = str(uuid.uuid4())
+    print("Informasi Pelapor")
     laporan['NIK'] = input(f"{'Masukkan NIK':<{field_width}} : ")
     laporan['Nama Pelapor'] = input(f"{'Masukkan Nama Pelapor':<{field_width}} : ")
-    laporan['Nama Terduga Covid'] = input(f"{'Masukkan Nama Terduga Covid':<{field_width}} : ")
-    laporan['Alamat Terduga Covid'] = input(f"{'Masukkan Alamat Terduga Covid':<{field_width}} : ")
-    laporan['Gejala'] = input(f"{'Masukkan Gejala':<{field_width}} : ")
-    laporan['Penjemputan'] = {
-            "ID_Penjemput": "",
-            "Nama_Lengkap": "",
-            "Nomor_Telepon": "",
-            "Nomor_Kendaraan": "",
-            "Waktu_Penjemputan": ""
-    }  
+    laporan['Pasien'] = []
 
+    # Meminta informasi untuk setiap pasien
+    jumlah_pasien = int(input("Masukkan jumlah pasien yang akan dilaporkan: "))
+    print("\nInformasi Pasien")
+    for i in range(jumlah_pasien):
+        pasien = {}
+        print(f"{'Pasien ke ' + str(i+1)}")
+        pasien['Nama Terduga Covid'] = input(f"{'Nama Terduga Covid':<{field_width}} : ")
+        pasien['Alamat Terduga Covid'] = input(f"{'Alamat Terduga Covid':<{field_width}} : ")
+        pasien['Gejala'] = input(f"{'Gejala':<{field_width}} : ")
+        laporan['Pasien'].append(pasien)
+
+    # Sisipkan informasi penjemputan setelah informasi pasien
+    laporan['Penjemputan'] = {
+        "ID_Penjemput": "",
+        "Nama_Lengkap": "",
+        "Nomor_Telepon": "",
+        "Nomor_Kendaraan": "",
+        "Waktu_Penjemputan": ""
+    }
+
+    # Menambahkan laporan ke dalam data laporan yang ada
     if os.path.exists(data_laporan_path):
         with open(data_laporan_path, 'r') as json_file:
             data_laporan = json.load(json_file)
     else:
         data_laporan = []
-    
     data_laporan.append(laporan)
 
     # Tulis data laporan ke file JSON
@@ -76,11 +89,11 @@ try:
         json.dump(data_laporan, json_file, indent=4)
 
     # Kirim laporan ke server
-    send_message(';'.join([laporan[key] for key in list(laporan.keys())[:-1]]))
+    send_message(json.dumps(laporan))
 
-    print("Laporan dikirim")
+    print("\nLaporan dikirim")
 
-    print(f"Menunggu respons dari server...")
+    print(f"\nMenunggu respons dari server...")
     # Agar subscriber tetap berjalan
     subscriber, streaming_pull_future = create_subscriber()
     if subscriber:
