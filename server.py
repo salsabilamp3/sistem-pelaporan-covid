@@ -47,7 +47,7 @@ def callback(message):
                 # Respon kepada client dengan informasi waktu penjemputan, nama penjemput, dan jumlah orang penjemputan
                 waktu_penjemputan = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
                 nama_penjemput = selected_penjemput["Nama_Lengkap"]
-                jumlah_orang = 1  # Misalnya hanya 1 orang penjemputan
+                jumlah_orang= len(data["Pasien"]) 
 
                 # Perbarui last_schedule penjemput yang dipilih
                 last_schedule = selected_penjemput.get("last_schedule")

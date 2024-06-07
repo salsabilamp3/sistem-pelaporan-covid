@@ -27,5 +27,58 @@
             "Nomor_Kendaraan": "B 1121 IJ",
             "Waktu_Penjemputan": "2024-06-07 17:52:34"
         }
+    },
+    {
+        "IDLaporan": "2dd66788-b963-4209-9c39-e87093910a20",
+        "NIK": "6789012345678901",
+        "Nama Pelapor": "Linda Brown",
+        "Pasien": [
+            {
+                "Nama Terduga Covid": "Asep Purnama",
+                "Alamat Terduga Covid": "Jalan Purnama",
+                "Gejala": "Kejang"
+            },
+            {
+                "Nama Terduga Covid": "Susi susilawano",
+                "Alamat Terduga Covid": "Jalan purnama",
+                "Gejala": "Batuk"
+            },
+            {
+                "Nama Terduga Covid": "Pindang",
+                "Alamat Terduga Covid": "Jalan Purnama",
+                "Gejala": "Demam"
+            }
+        ],
+        "Penjemputan": {
+            "ID_Penjemput": "PEN005",
+            "Nama_Lengkap": "Driver STU",
+            "Nomor_Telepon": "08123456785",
+            "Nomor_Kendaraan": "B 3141 KL",
+            "Waktu_Penjemputan": "2024-06-07 19:05:59"
+        }
+    },
+    {
+        "IDLaporan": "a6c3bab0-b102-4d2e-8dce-dc8f95a0a23b",
+        "NIK": "5678901234567890",
+        "Nama Pelapor": "David Johnson",
+        "Pasien": [
+            {
+                "Nama Terduga Covid": "Stepen",
+                "Alamat Terduga Covid": "Jalan Jalan",
+                "Gejala": "Pingsan"
+            },
+            {
+                "Nama Terduga Covid": "Stupid",
+                "Alamat Terduga Covid": "Dimana",
+                "Gejala": "Kejang"
+            }
+        ],
+        "Penjemputan": {
+            "ID_Penjemput": "PEN006",
+            "Nama_Lengkap": "Driver VWX",
+            "Nomor_Telepon": "08123456784",
+            "Nomor_Kendaraan": "B 5161 MN",
+            "Waktu_Penjemputan": "2024-06-07 19:08:21"
+        }
     }
 ]
