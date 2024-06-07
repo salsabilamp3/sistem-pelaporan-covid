@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import uuid
 import os
@@ -22,13 +23,18 @@ def send_message(data):
     except Exception as e:
         print(f"Terjadi kesalahan saat mengirim pesan: {e}")
 
+# Fungsi untuk memformat tanggal dan waktu
+def format_datetime(datetime_str):
+    dt = datetime.strptime(datetime_str, "%Y-%m-%d %H:%M:%S")
+    return dt.strftime("%d %B %Y, %H:%M:%S")
+
 # Fungsi untuk mencetak respons dengan layout rapi
 def print_response(id_laporan, waktu_penjemputan, nama_penjemput, jumlah_orang):
     print("\n=== Respons dari Server ===")
     print(f"IDLaporan        : {id_laporan}")
     print(f"Waktu Penjemputan: {waktu_penjemputan}")
     print(f"Nama Penjemput   : {nama_penjemput}")
-    print(f"Jumlah Orang     : {jumlah_orang}")
+    print(f"Jumlah Penjemput     : {jumlah_orang}")
     print("===========================")
 
 # Fungsi untuk menangani pesan respons dari server
@@ -37,7 +43,7 @@ def callback(message):
         response = message.data.decode('utf-8')
         id_laporan, respon_detail = response.split(';', 1)
         detail_items = respon_detail.split(',')
-        waktu_penjemputan = detail_items[0].split(': ')[1]
+        waktu_penjemputan = format_datetime(detail_items[0].split(': ')[1])
         nama_penjemput = detail_items[1].split(': ')[1]
         jumlah_orang = detail_items[2].split(': ')[1]
         print_response(id_laporan, waktu_penjemputan, nama_penjemput, jumlah_orang)
