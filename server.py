@@ -91,7 +91,7 @@ def callback(message):
                 respon_detail = f"Waktu Penjemputan: {waktu_penjemputan}, Nama Penjemput: {nama_penjemput}, Jumlah Orang Penjemputan: {jumlah_orang}"
                
             else:
-                respon_detail = f"Kesalahan: {reason}"
+                respon_detail = f"{reason}"
             respon = f"{id_laporan};{respon_detail}"
             print(f"Respon: {respon}")
 
@@ -119,15 +119,11 @@ def validate_nik(nik, nama):
                 valid_nama = True
                 break
             else:
-                reason = f"NIK {nik} terdaftar dengan nama {person['Nama']}, bukan {nama}"
+                reason = f"NIK {nik} terdaftar dengan nama {person['Nama']}, bukan {nama}."
                 break
-    if not valid_nik:
-        for person in data_kependudukan:
-            if person["Nama"] == nama:
-                reason = f"Nama {nama} terdaftar dengan NIK {person['NIK']}, bukan {nik}"
-                break
-        if not reason:
-            reason = f"NIK {nik} tidak ditemukan"
+        else :
+            reason = f"NIK {nik} tidak terdaftar."
+
     return valid_nik, valid_nama, reason
 
 # Fungsi untuk mengirim respons ke client menggunakan message queue

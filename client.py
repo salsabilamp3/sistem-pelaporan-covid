@@ -18,7 +18,7 @@ def send_message(data):
         publisher = pubsub_v1.PublisherClient()
         topic_path = "projects/sistem-siaga-covid/topics/laporan"
         future = publisher.publish(topic_path, data=data.encode('utf-8'))
-        print(f"\nSent message: {data}")
+        print(f"\nSent laporan : {data}")
         future.result()
     except Exception as e:
         print(f"Terjadi kesalahan saat mengirim pesan: {e}")
@@ -28,7 +28,7 @@ def format_datetime(datetime_str):
     dt = datetime.strptime(datetime_str, "%Y-%m-%d %H:%M:%S")
     return dt.strftime("%d %B %Y, %H:%M:%S")
 
-# Fungsi untuk mencetak respons dengan layout rapi
+# Fungsi untuk mencetak respons
 def print_response(id_laporan, waktu_penjemputan, nama_penjemput, jumlah_orang):
     print("\n=== Respons dari Server ===")
     print(f"IDLaporan        : {id_laporan}")
@@ -37,16 +37,29 @@ def print_response(id_laporan, waktu_penjemputan, nama_penjemput, jumlah_orang):
     print(f"Jumlah Penjemput     : {jumlah_orang}")
     print("===========================")
 
+# Fungsi untuk mencetak pesan kesalahan
+def print_error_message(id_laporan, error_message):
+    print("\n=== Pesan Kesalahan dari Server ===")
+    print(f"IDLaporan        : {id_laporan}")
+    print(f"Pesan Kesalahan  : {error_message}")
+    print("===================================")
+
 # Fungsi untuk menangani pesan respons dari server
 def callback(message):
     try:
         response = message.data.decode('utf-8')
         id_laporan, respon_detail = response.split(';', 1)
-        detail_items = respon_detail.split(',')
-        waktu_penjemputan = format_datetime(detail_items[0].split(': ')[1])
-        nama_penjemput = detail_items[1].split(': ')[1]
-        jumlah_orang = detail_items[2].split(': ')[1]
-        print_response(id_laporan, waktu_penjemputan, nama_penjemput, jumlah_orang)
+        
+        # Periksa apakah respon_detail mengandung informasi penjemputan atau pesan kesalahan
+        if "Waktu Penjemputan" in respon_detail:
+            detail_items = respon_detail.split(',')
+            waktu_penjemputan = format_datetime(detail_items[0].split(': ')[1])
+            nama_penjemput = detail_items[1].split(': ')[1]
+            jumlah_orang = detail_items[2].split(': ')[1]
+            print_response(id_laporan, waktu_penjemputan, nama_penjemput, jumlah_orang)
+        else:
+            print_error_message(id_laporan, respon_detail)
+            
         message.ack()
     except Exception as e:
         print(f"Terjadi kesalahan saat menangani respons dari server: {e}")
