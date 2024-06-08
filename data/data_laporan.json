@@ -315,5 +315,43 @@
             "Nomor_Kendaraan": "D 5678 CD",
             "Waktu_Penjemputan": "2024-06-07 23:26:09"
         }
+    },
+    {
+        "IDLaporan": "271196d8-ece0-40fa-8023-b158d9e6e9a8",
+        "NIK": "3276100609900010",
+        "Nama Pelapor": "Sri Wahyuni",
+        "Pasien": [
+            {
+                "Nama Terduga Covid": "Uus",
+                "Alamat Terduga Covid": "Jalan Kartini",
+                "Gejala": "Demam"
+            }
+        ],
+        "Penjemputan": {
+            "ID_Penjemput": "PJM003",
+            "Nama_Lengkap": "Eko Wibowo",
+            "Nomor_Telepon": "083456789012",
+            "Nomor_Kendaraan": "F 9101 EF",
+            "Waktu_Penjemputan": "2024-06-08 07:25:43"
+        }
+    },
+    {
+        "IDLaporan": "50dd89f8-92bc-45de-8bd3-66bf39dc0b2f",
+        "NIK": "1234",
+        "Nama Pelapor": "asep",
+        "Pasien": [
+            {
+                "Nama Terduga Covid": "usro",
+                "Alamat Terduga Covid": "jalan pos",
+                "Gejala": "demam"
+            }
+        ],
+        "Penjemputan": {
+            "ID_Penjemput": "",
+            "Nama_Lengkap": "",
+            "Nomor_Telepon": "",
+            "Nomor_Kendaraan": "",
+            "Waktu_Penjemputan": ""
+        }
     }
 ]
