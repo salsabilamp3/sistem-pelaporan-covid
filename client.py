@@ -18,7 +18,6 @@ def send_message(data):
         publisher = pubsub_v1.PublisherClient()
         topic_path = "projects/sistem-siaga-covid/topics/laporan"
         future = publisher.publish(topic_path, data=data.encode('utf-8'))
-        print(f"\nSent laporan : {data}")
         future.result()
     except Exception as e:
         print(f"Terjadi kesalahan saat mengirim pesan: {e}")
@@ -30,12 +29,12 @@ def format_datetime(datetime_str):
 
 # Fungsi untuk mencetak respons
 def print_response(id_laporan, waktu_penjemputan, nama_penjemput, jumlah_orang):
-    print("\n=== Respons dari Server ===")
+    print("\n======= Respons dari Server =======")
     print(f"IDLaporan        : {id_laporan}")
     print(f"Waktu Penjemputan: {waktu_penjemputan}")
     print(f"Nama Penjemput   : {nama_penjemput}")
     print(f"Jumlah Penjemput : {jumlah_orang}")
-    print("===========================")
+    print("===================================")
 
 # Fungsi untuk mencetak pesan kesalahan
 def print_error_message(id_laporan, error_message):
@@ -87,26 +86,26 @@ data_laporan_path = r'data\data_laporan.json'
 
 def create_and_send_report():
     laporan = {}
-    field_width = 30
+    field_width = 22
 
     try:
         # Buat struktur data laporan yang baru
         laporan['IDLaporan'] = str(uuid.uuid4())
-        print("Informasi Pelapor")
+        print("======== Informasi Pelapor ========")
         laporan['NIK'] = input(f"{'Masukkan NIK':<{field_width}} : ")
         laporan['Nama Pelapor'] = input(f"{'Masukkan Nama Pelapor':<{field_width}} : ")
         laporan['Pasien'] = []
+        jumlah_pasien = int(input("Masukkan jumlah pasien yang akan dilaporkan : "))
 
-        # Meminta informasi untuk setiap pasien
-        jumlah_pasien = int(input("Masukkan jumlah pasien yang akan dilaporkan: "))
-        print("\nInformasi Pasien")
+        print("\n======== Informasi Pasien =========")
         for i in range(jumlah_pasien):
             pasien = {}
-            print(f"{'Pasien ke ' + str(i+1)}")
+            print(f"{'----------- Pasien ke ' + str(i+1)} -----------")
             pasien['Nama Terduga Covid'] = input(f"{'Nama Terduga Covid':<{field_width}} : ")
             pasien['Alamat Terduga Covid'] = input(f"{'Alamat Terduga Covid':<{field_width}} : ")
             pasien['Gejala'] = input(f"{'Gejala':<{field_width}} : ")
             laporan['Pasien'].append(pasien)
+        print("===================================")
 
         # Sisipkan informasi penjemputan setelah informasi pasien
         laporan['Penjemputan'] = {
@@ -132,9 +131,10 @@ def create_and_send_report():
         # Kirim laporan ke server
         send_message(json.dumps(laporan))
 
-        print("\nLaporan dikirim")
+        print("\n--------- Laporan dikirim ---------")
 
-        print(f"\nMenunggu respons dari server...")
+        print(f"\n-- Menunggu respons dari server ---")
+
         # Agar subscriber tetap berjalan
         subscriber, streaming_pull_future = create_subscriber()
         if subscriber:
